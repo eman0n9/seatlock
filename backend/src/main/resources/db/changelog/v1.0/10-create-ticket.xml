@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="10-create-ticket" author="admin">
+        <createTable tableName="ticket">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_ticket"/>
+            </column>
+            <column name="status" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="order_id" type="UUID">
+                <constraints nullable="false"
+                             foreignKeyName="fk_ticket_order_id"
+                             references="app_order(id)"/>
+            </column>
+            <column name="seat_id" type="UUID">
+                <constraints nullable="false"
+                             foreignKeyName="fk_ticket_seat_id"
+                             references="seat(id)"/>
+            </column>
+            <column name="offer_id" type="UUID">
+                <constraints nullable="false"
+                             foreignKeyName="fk_ticket_offer_id"
+                             references="offer(id)"/>
+            </column>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="ticket"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

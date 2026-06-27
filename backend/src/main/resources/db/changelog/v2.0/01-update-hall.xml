@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="01-update-hall" author="admin">
+        <addColumn tableName="hall">
+            <column name="address" type="VARCHAR(500)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uq_hall_address"/>
+            </column>
+        </addColumn>
+
+        <addUniqueConstraint tableName="hall" columnNames="name" constraintName="uq_hall_name"/>
+
+        <rollback>
+            <dropColumn tableName="hall" columnName="address"/>
+            <dropUniqueConstraint tableName="hall" constraintName="uq_hall_name"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

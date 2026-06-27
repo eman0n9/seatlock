@@ -1,0 +1,109 @@
+type SeatMapTicket{
+    id: ID!
+    seat: Int!
+    row: Int!
+    type: String!
+}
+
+type SeatMapRow{
+    number: Int!
+    tickets: [SeatMapTicket]!
+}
+
+type PriceZoneInfo {
+    type: String!
+    price: Float!
+}
+
+type SeatMapResponse {
+    rows: [SeatMapRow]!
+    priceZones: [PriceZoneInfo]!
+}
+
+type Activity{
+    id : ID!
+    name : String!
+    date : String!
+    startTime : String!
+    endTime : String!
+    description : String
+    category : ActivityCategory!
+    hall : Hall!
+    performers: [Performer]
+}
+
+type ActivityPage {
+    content: [Activity!]!
+    totalElements: Int!
+    totalPages: Int!
+    pageNumber: Int!
+}
+
+input PriceZoneInput{
+    ticketType: String!
+    price: Float!
+    seatIds: [ID!]!
+}
+
+input ActivityInput{
+    name : String!
+    date : String!
+    startTime : String!
+    endTime : String!
+    description : String
+    hallId: ID!
+    categoryId: ID!
+    performer : [ID!]
+    priceZones: [PriceZoneInput!]!
+}
+
+input ActivityUpdateInput{
+    name : String
+    date : String
+    startTime : String
+    endTime : String
+    description : String
+    hallId: ID
+    categoryId: ID
+    performer : [ID]
+}
+
+input SearchInput{
+    text : String
+    date : String
+    dateFrom : String
+    dateTo : String
+    startTime : String
+    category : String
+    city : String
+}
+
+extend type Query{
+    getAllActivities(page: Int!, size: Int!) : ActivityPage
+    getActivityById(id : ID!) : Activity
+    searchActivities(input: SearchInput!) : [Activity]
+    getSeatMap(id: ID!): SeatMapResponse!
+    getCities: [String!]!
+}
+
+input TicketTypeInput {
+    name: String!
+    price: Float!
+}
+
+input RowOfferInput {
+    row: Int!
+    typeName: String!
+}
+
+input SetOffersInput {
+    types: [TicketTypeInput!]!
+    offers: [RowOfferInput!]!
+}
+
+extend type Mutation{
+    createActivity(input : ActivityInput!) : Boolean
+    deleteActivity(id : ID!) : Boolean
+    updateActivity(input : ActivityUpdateInput!, id : ID!) : Boolean
+    setOffers(activityId: ID!, input: SetOffersInput!): Boolean
+}

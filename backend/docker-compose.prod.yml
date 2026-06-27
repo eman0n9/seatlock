@@ -1,0 +1,9 @@
+services:
+  db:
+    profiles:
+      - disabled
+
+  app:
+    env_file:
+      - database_prod.env
+      - security.env

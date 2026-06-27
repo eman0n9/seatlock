@@ -1,0 +1,52 @@
+extend type Query {
+    me: User
+    getOrders: [Order!]!
+    getOrderById(id: ID!): Order
+    getUpcomingOrders: [Order!]!
+    getPastOrders: [Order!]!
+}
+
+extend type Mutation {
+    approveOrganizer(userId: ID!): Boolean
+    updateUser(input: UserUpdate): Boolean
+}
+
+type User {
+    id: ID!
+    name: String!
+    surname: String!
+    email: String!
+    role: String!
+    phone: String!
+}
+
+type Order {
+    id: ID!
+    totalPrice: Float!
+    status: String!
+    createdAt: String!
+    tickets: [Ticket!]!
+    activity: OrderActivity!
+}
+
+type OrderActivity{
+    name : String!
+    date : String!
+    startTime : String!
+    endTime : String!
+    description : String
+    hall: Hall!
+}
+
+type Ticket {
+    id: ID!
+    seatNumber: Int!
+    rowNumber: Int!
+}
+
+input UserUpdate{
+    name: String
+    surname: String
+    email: String
+    password: String
+}

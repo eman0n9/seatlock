@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="01-create-user-favorite-activity" author="admin">
+        <createTable tableName="user_favorite_activity">
+            <column name="user_id" type="UUID">
+                <constraints nullable="false"
+                             foreignKeyName="fk_ufa_user_id"
+                             references="app_user(id)"/>
+            </column>
+            <column name="activity_id" type="UUID">
+                <constraints nullable="false"
+                             foreignKeyName="fk_ufa_activity_id"
+                             references="activity(id)"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey tableName="user_favorite_activity"
+                       columnNames="user_id, activity_id"
+                       constraintName="pk_user_favorite_activity"/>
+
+        <rollback>
+            <dropTable tableName="user_favorite_activity"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

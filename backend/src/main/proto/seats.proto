@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package seats;
+
+// Go package path for generated code
+option go_package = "github.com/minakdanCVUT/SP1Team/seatlock_sockets/internal/grpc/pb";
+// Java package path for Spring implementation
+option java_package = "com.seatlock.grpc.seats";
+option java_multiple_files = true;
+
+// Service for Go -> Spring communication
+service SeatService {
+  // Flow 1 & 7: Fetches all currently purchased seats for an event from the Database
+  rpc GetPurchasedSeats(GetPurchasedSeatsRequest) returns (GetPurchasedSeatsResponse);
+}
+
+message GetPurchasedSeatsRequest {
+  string event_id = 1;
+}
+
+message GetPurchasedSeatsResponse {
+  // List of seat IDs that are already purchased in the DB
+  repeated string seat_ids = 1;
+}

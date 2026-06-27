@@ -1,0 +1,59 @@
+spring:
+  application:
+    name: seatlock
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  jooq:
+    sql-dialect: POSTGRES
+
+  elasticsearch:
+    uris: ${SPRING_ELASTICSEARCH_URIS}
+    socket-timeout: 10s
+
+  graphql:
+    graphiql:
+      enabled: true
+    websocket:
+      path: /graphql
+    schema:
+      printer:
+        enabled: true
+    cors:
+      allowed-origins: "*"
+
+  liquibase:
+    change-log: classpath:db/changelog/changelog-master.xml
+    enabled: true
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+grpc:
+  server:
+    port: 9090
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.jooq.tools.LoggerListener: DEBUG
+    org.springframework.data.elasticsearch: DEBUG
+    org.springframework.graphql: DEBUG
+
+app:
+  cors:
+    allowed-origins: ${FRONTEND_URL:http://localhost:3000}

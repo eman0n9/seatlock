@@ -1,0 +1,8 @@
+extend type Mutation {
+    checkout(activityId: ID!, seatIds: [ID!]!): CheckoutResponse!
+}
+
+type CheckoutResponse {
+    activityId: ID!
+    purchasedSeatIds: [ID!]!
+}

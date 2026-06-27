@@ -1,0 +1,319 @@
+/* Profile page layout */
+.profile-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Profile header card */
+.profile-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.profile-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+  letter-spacing: -0.02em;
+}
+
+.profile-header__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.profile-header__name {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0 0 4px;
+  color: var(--text-main);
+}
+
+.profile-header__email {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* Tab navigation */
+.profile-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.profile-tab {
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+  white-space: nowrap;
+}
+
+.profile-tab:hover {
+  border-color: var(--line-strong);
+  color: var(--text-main);
+}
+
+.profile-tab.is-active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* Profile section content area */
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Order card */
+.profile-order-card {
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface-muted);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  transition: border-color 0.15s;
+}
+
+.profile-order-card:hover {
+  border-color: var(--line-strong);
+}
+
+.profile-order-card__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.profile-order-card__title {
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--text-main);
+  margin: 0 0 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.profile-order-card__meta {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.profile-order-card__right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.profile-order-card__total {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+/* Ticket card */
+.profile-ticket-card {
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface-muted);
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  transition: border-color 0.15s;
+}
+
+.profile-ticket-card:hover {
+  border-color: var(--line-strong);
+}
+
+.profile-ticket-card__qr {
+  width: 56px;
+  height: 56px;
+  border: 2px dashed var(--line-strong);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  color: var(--text-soft);
+  flex-shrink: 0;
+  background: var(--surface);
+}
+
+.profile-ticket-card__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.profile-ticket-card__seat {
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--text-main);
+  margin: 0 0 4px;
+}
+
+.profile-ticket-card__order {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin: 0 0 8px;
+  font-family: monospace;
+  letter-spacing: 0.02em;
+}
+
+/* Status badge */
+.profile-status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  background: var(--surface-muted);
+  color: var(--text-muted);
+  border: 1px solid var(--line);
+}
+
+.profile-status-badge.is-confirmed {
+  background: rgba(116, 162, 32, 0.12);
+  color: var(--accent-dark);
+  border-color: rgba(116, 162, 32, 0.3);
+}
+
+.profile-status-badge.is-valid {
+  background: rgba(116, 162, 32, 0.12);
+  color: var(--accent-dark);
+  border-color: rgba(116, 162, 32, 0.3);
+}
+
+.profile-status-badge.is-delivered {
+  background: rgba(45, 133, 217, 0.1);
+  color: #1a6cb5;
+  border-color: rgba(45, 133, 217, 0.3);
+}
+
+.profile-status-badge.is-cancelled {
+  background: rgba(220, 70, 70, 0.08);
+  color: #c0392b;
+  border-color: rgba(220, 70, 70, 0.25);
+}
+
+.profile-status-badge.is-used {
+  background: var(--surface-muted);
+  color: var(--text-soft);
+  border-color: var(--line);
+}
+
+.profile-status-badge.is-pending {
+  background: rgba(230, 160, 20, 0.1);
+  color: #b57a00;
+  border-color: rgba(230, 160, 20, 0.35);
+}
+
+/* Edit profile form */
+.profile-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.profile-edit-form__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 640px) {
+  .profile-edit-form__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.profile-edit-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.profile-edit-field--wide {
+  grid-column: 1 / -1;
+}
+
+.profile-edit-field label {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.profile-edit-form__saved {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--accent-dark);
+}
+
+/* Stats row */
+.profile-stats-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.profile-stat-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface-muted);
+  min-width: 100px;
+}
+
+.profile-stat-chip__value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1;
+}
+
+.profile-stat-chip__label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* List items with empty state */
+.profile-list-empty {
+  padding: 32px 16px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}

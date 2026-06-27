@@ -1,0 +1,52 @@
+type Hall{
+    id: ID!
+    name: String!
+    address: String!
+    city: String!
+}
+
+type HallSeat {
+    id: ID!
+    seatNumber: Int!
+    rowNumber: Int!
+}
+
+type HallRow {
+    number: Int!
+    seats: [HallSeat!]!
+}
+
+type HallSeatMap {
+    rows: [HallRow!]!
+}
+
+
+input RowConfig{
+    rowNumber: Int!
+    countOfSeats: Int!
+}
+
+input HallInput{
+    name : String!
+    address: String!
+    city: String!
+    seats: [RowConfig]
+}
+
+input HallUpdateInput {
+    name: String
+    address: String
+    city: String
+}
+
+extend type Query{
+    getAllHalls : [Hall]
+    getHallById(id : ID!) : Hall
+    getHallSeatMap(id: ID!): HallSeatMap!
+}
+
+extend type Mutation{
+    createHall(input: HallInput!): Hall
+    updateHall(input : HallUpdateInput!, id : ID!) : Boolean
+    deleteHall(id: ID!): Boolean
+}

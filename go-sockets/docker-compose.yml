@@ -1,0 +1,41 @@
+services:
+  seatlock-ws:
+    build: .
+    container_name: seatlock-ws
+    ports:
+      - "8081:8081"
+    env_file:
+      - .env
+    environment:
+      - REDIS_ADDR=redis:6379
+      - SPRING_GRPC_ADDR=seatlock-api:9090
+    networks:
+      - app-network
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: seatlock-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --notify-keyspace-events Ex
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+
+networks:
+  app-network:
+    external: true
+
+volumes:
+  redis-data:
