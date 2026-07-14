@@ -34,7 +34,7 @@
         <database_password>password</database_password>
         <database_driver>org.postgresql.Driver</database_driver>
         <grpc.version>1.70.0</grpc.version>
-        <protobuf.version>4.29.3</protobuf.version>
+        <protobuf.version>4.35.1</protobuf.version>
         <spring-graphql.version>2.0.4</spring-graphql.version>
     </properties>
     <dependencies>
