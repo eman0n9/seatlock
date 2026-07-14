@@ -18,7 +18,7 @@ jobs:
       NEXT_PUBLIC_PROFILE_API_MODE: mock
       NEXT_PUBLIC_PURCHASE_API_MODE: mock
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v6
         with:
           node-version: 20
@@ -79,7 +79,7 @@ jobs:
       SPRING_DATA_REDIS_PORT: 6379
       SECURITY_JWT_SECRET: c2VhdGxvY2stY2ktdGVzdC1rZXktMzItYnl0ZXMtbWluaW11bQ==
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-java@v5
         with:
           distribution: temurin
@@ -94,7 +94,7 @@ jobs:
       run:
         working-directory: go-sockets
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-go@v6
         with:
           go-version-file: go-sockets/go.mod
