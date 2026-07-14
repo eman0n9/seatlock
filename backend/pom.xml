@@ -275,7 +275,7 @@
 
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-maven-plugin</artifactId>
-                <version>5.0.1</version>
+                <version>5.0.3</version>
                 <configuration>
                     <searchPath>src/main/resources</searchPath>
                     <changeLogFile>db/changelog/changelog-master.xml</changeLogFile>
