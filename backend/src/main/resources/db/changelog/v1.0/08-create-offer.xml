@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="08-create-offer" author="admin">
+        <createTable tableName="offer">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_offer"/>
+            </column>
+            <column name="type" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="DOUBLE PRECISION">
+                <constraints nullable="false"/>
+            </column>
+            <column name="activity_id" type="UUID">
+                <constraints nullable="false"
+                             foreignKeyName="fk_offer_activity_id"
+                             references="activity(id)"/>
+            </column>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="offer"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

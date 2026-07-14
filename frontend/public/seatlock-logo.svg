@@ -1,0 +1,8 @@
+<svg width="180" height="36" viewBox="0 0 180 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="1" y="5" width="28" height="26" rx="6" fill="#8BC540"/>
+  <path d="M9 13.5h12M9 18h12M9 22.5h7" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M20 25v-3.5a3.5 3.5 0 0 1 7 0V25" stroke="#41464C" stroke-width="2" stroke-linecap="round"/>
+  <rect x="18.5" y="24" width="10" height="8" rx="2" fill="#41464C"/>
+  <text x="37" y="26" fill="#41464C" font-family="Inter, Arial, sans-serif" font-size="25" font-weight="800" letter-spacing="-1">Seat</text>
+  <text x="88" y="26" fill="#8BC540" font-family="Inter, Arial, sans-serif" font-size="25" font-weight="800" letter-spacing="-1">Lock</text>
+</svg>

@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package seats;
+
+option go_package = "github.com/minakdanCVUT/SP1Team/seatlock_sockets/internal/grpc/pb";
+option java_package = "com.seatlock.grpc.seats";
+option java_multiple_files = true;
+
+service SeatService {
+  rpc GetPurchasedSeats(GetPurchasedSeatsRequest) returns (GetPurchasedSeatsResponse);
+}
+
+message GetPurchasedSeatsRequest {
+  string event_id = 1;
+}
+
+message GetPurchasedSeatsResponse {
+  repeated string seat_ids = 1;
+}

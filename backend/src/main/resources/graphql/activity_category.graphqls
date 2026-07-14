@@ -1,0 +1,14 @@
+type ActivityCategory{
+    id: ID!
+    name : String!
+}
+
+extend type Query{
+    showAllCategories : [ActivityCategory]
+}
+
+extend type Mutation {
+    deleteCategory(id : ID!) : Boolean
+    changeCategory(id : ID!, name : String!) : Boolean
+    addCategory(name : String!) : Boolean
+}

@@ -1,0 +1,441 @@
+/* ---- My Orders page ---- */
+
+.tickets-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Order card on tickets page */
+.ticket-order-card {
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+}
+
+.ticket-order-card:hover {
+  border-color: var(--line-strong);
+  background: var(--surface-muted);
+  box-shadow: 0 12px 24px rgba(12, 18, 28, 0.06);
+}
+
+.ticket-order-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.ticket-order-card__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.ticket-order-card__title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 4px;
+  color: var(--text-main);
+}
+
+.ticket-order-card__meta {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  margin: 0 0 8px;
+}
+
+.ticket-order-card__right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.ticket-order-card__total {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.ticket-order-card__action {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--link);
+  white-space: nowrap;
+}
+
+/* Individual ticket card */
+.ticket-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+  gap: 16px;
+}
+
+.ticket-item-card {
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface-muted);
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  transition: border-color 0.15s;
+}
+
+.ticket-item-card:hover {
+  border-color: var(--line-strong);
+}
+
+.ticket-qr-stub {
+  width: 60px;
+  height: 60px;
+  border: 2px dashed var(--line-strong);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: var(--text-soft);
+  flex-shrink: 0;
+  background: var(--surface);
+}
+
+.ticket-item-card__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.ticket-item-card__seat {
+  font-weight: 600;
+  font-size: 0.9375rem;
+  margin: 0 0 4px;
+  color: var(--text-main);
+}
+
+.ticket-item-card__order {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-family: monospace;
+  letter-spacing: 0.02em;
+  margin: 0 0 8px;
+  word-break: break-all;
+}
+
+/* Status badge (tickets) */
+.ticket-status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  background: var(--surface-muted);
+  color: var(--text-muted);
+  border: 1px solid var(--line);
+}
+
+.ticket-status-badge.is-valid {
+  background: rgba(116, 162, 32, 0.12);
+  color: var(--accent-dark);
+  border-color: rgba(116, 162, 32, 0.3);
+}
+
+.ticket-status-badge.is-confirmed {
+  background: rgba(116, 162, 32, 0.12);
+  color: var(--accent-dark);
+  border-color: rgba(116, 162, 32, 0.3);
+}
+
+.ticket-status-badge.is-used {
+  background: var(--surface-muted);
+  color: var(--text-soft);
+  border-color: var(--line);
+}
+
+.ticket-status-badge.is-cancelled {
+  background: rgba(220, 70, 70, 0.08);
+  color: #c0392b;
+  border-color: rgba(220, 70, 70, 0.25);
+}
+
+.ticket-status-badge.is-pending {
+  background: rgba(230, 160, 20, 0.1);
+  color: #b57a00;
+  border-color: rgba(230, 160, 20, 0.35);
+}
+
+/* Skeleton shimmer */
+@keyframes ticket-shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+.ticket-skeleton {
+  height: 80px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, var(--surface-muted) 25%, var(--line) 50%, var(--surface-muted) 75%);
+  background-size: 800px 100%;
+  animation: ticket-shimmer 1.4s infinite linear;
+}
+
+/* ---- Checkout / Purchase page ---- */
+
+/* Stepper */
+.checkout-stepper {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 4px;
+}
+
+.checkout-step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8125rem;
+  color: var(--text-soft);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.checkout-step__number {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--line-strong);
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.checkout-step.is-done .checkout-step__number {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.checkout-step.is-active {
+  color: var(--text-main);
+}
+
+.checkout-step.is-active .checkout-step__number {
+  border-color: var(--accent);
+  color: var(--accent-dark);
+}
+
+.checkout-step__connector {
+  flex: 1;
+  height: 2px;
+  background: var(--line);
+  margin: 0 8px;
+  min-width: 20px;
+}
+
+.checkout-step__connector.is-done {
+  background: var(--accent);
+}
+
+/* Payment method picker */
+.payment-picker {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+@media (max-width: 520px) {
+  .payment-picker {
+    grid-template-columns: 1fr;
+  }
+}
+
+.payment-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 10px;
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface-muted);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  text-align: center;
+}
+
+.payment-option:hover {
+  border-color: var(--line-strong);
+  background: var(--surface);
+}
+
+.payment-option.is-selected {
+  border-color: var(--accent);
+  background: rgba(116, 162, 32, 0.06);
+}
+
+.payment-option__icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.payment-option__label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.payment-option__sub {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Confirmation ticket list */
+.confirmation-tickets {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.confirmation-ticket-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface-muted);
+  font-size: 0.875rem;
+}
+
+.confirmation-ticket-row__seat {
+  font-weight: 500;
+  color: var(--text-main);
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.confirmation-ticket-row__badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  background: rgba(116, 162, 32, 0.12);
+  color: var(--accent-dark);
+  border: 1px solid rgba(116, 162, 32, 0.3);
+  flex-shrink: 0;
+}
+
+/* Purchase confirmation meta */
+.purchase-confirmation__meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+  margin: 20px 0;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface-muted);
+}
+
+.purchase-confirmation__meta > div {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.purchase-confirmation__meta span {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.purchase-confirmation__meta strong {
+  font-size: 0.9375rem;
+  color: var(--text-main);
+}
+
+/* Order details */
+.order-details-page {
+  padding-top: 24px;
+}
+
+.order-details-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.75fr) minmax(280px, 340px);
+  gap: 20px;
+  align-items: start;
+}
+
+.order-details-summary {
+  position: sticky;
+  top: 24px;
+}
+
+.order-details-meta {
+  margin-top: 16px;
+  display: grid;
+  gap: 12px;
+}
+
+.order-details-meta__item {
+  padding: 14px 16px;
+  display: grid;
+  gap: 4px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface-muted);
+}
+
+.order-details-meta__item span {
+  color: var(--text-soft);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.order-details-meta__item strong {
+  font-size: 0.95rem;
+  color: var(--text-main);
+  word-break: break-word;
+}
+
+@media (max-width: 980px) {
+  .order-details-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .order-details-summary {
+    position: static;
+  }
+}
+
+@media (max-width: 720px) {
+  .ticket-order-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ticket-order-card__right {
+    align-items: flex-start;
+  }
+}

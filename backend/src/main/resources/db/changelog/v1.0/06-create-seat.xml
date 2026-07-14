@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="06-create-seat" author="admin">
+        <createTable tableName="seat">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_seat"/>
+            </column>
+            <column name="row_number" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="seat_number" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hall_id" type="UUID">
+                <constraints nullable="false"
+                             foreignKeyName="fk_seat_hall_id"
+                             references="hall(id)"/>
+            </column>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="seat"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

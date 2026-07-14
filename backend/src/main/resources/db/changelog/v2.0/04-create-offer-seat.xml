@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="04-create-offer-seat" author="admin">
+        <createTable tableName="offer_seat">
+            <column name="offer_id" type="UUID">
+                <constraints nullable="false"
+                             foreignKeyName="fk_offer_seat_offer_id"
+                             references="offer(id)"/>
+            </column>
+            <column name="seat_id" type="UUID">
+                <constraints nullable="false"
+                             foreignKeyName="fk_offer_seat_seat_id"
+                             references="seat(id)"/>
+            </column>
+        </createTable>
+        <addPrimaryKey tableName="offer_seat" columnNames="offer_id, seat_id" constraintName="pk_offer_seat"/>
+
+        <rollback>
+            <dropTable tableName="offer_seat"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

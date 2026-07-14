@@ -1,0 +1,34 @@
+type Performer{
+    id : ID!
+    name : String!
+    description : String
+}
+
+type PerformerPage {
+    content: [Performer!]!
+    totalElements: Int!
+    totalPages: Int!
+    pageNumber: Int!
+}
+
+input PerformerInput{
+    name : String!
+    description : String
+}
+
+input PerformerUpdateInput{
+    name : String
+    description : String
+}
+
+extend type Query{
+    getAllPerformers(page: Int!, size: Int!) : PerformerPage
+    getPerformerById(id : ID!) : Performer
+    search(text : String!) : [Performer]
+}
+
+extend type Mutation{
+    createPerformer(input : PerformerInput!) : Boolean
+    updatePerformer(input : PerformerUpdateInput!, id : ID!) : Boolean
+    deletePerformer(id : ID!) : Boolean
+}

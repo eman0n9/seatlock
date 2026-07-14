@@ -1,0 +1,11 @@
+extend type Mutation {
+    checkout(activityId: ID!, seatIds: [ID!]!): CheckoutResponse!
+    releaseReservations(activityId: ID!, seatIds: [ID!]!): Boolean!
+}
+
+type CheckoutResponse {
+    orderId: ID!
+    activityId: ID!
+    purchasedSeatIds: [ID!]!
+    totalPrice: Float!
+}

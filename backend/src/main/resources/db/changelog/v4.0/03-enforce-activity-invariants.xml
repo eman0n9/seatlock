@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="03-enforce-activity-invariants" author="seatlock">
+        <preConditions onFail="HALT">
+            <dbms type="postgresql"/>
+        </preConditions>
+        <sql splitStatements="true"><![CDATA[
+            CREATE EXTENSION IF NOT EXISTS btree_gist;
+
+            ALTER TABLE activity
+                ADD CONSTRAINT ck_activity_time_range CHECK (end_time > start_time);
+
+            ALTER TABLE activity
+                ADD CONSTRAINT ex_activity_hall_time
+                EXCLUDE USING gist (
+                    hall_id WITH =,
+                    tsrange(date + start_time, date + end_time, '[)') WITH &&
+                );
+
+            ALTER TABLE offer
+                ADD CONSTRAINT ck_offer_positive_price CHECK (price > 0),
+                ADD CONSTRAINT uq_offer_activity_type UNIQUE (activity_id, type);
+        ]]></sql>
+        <rollback>
+            <sql splitStatements="true"><![CDATA[
+                ALTER TABLE offer DROP CONSTRAINT IF EXISTS uq_offer_activity_type;
+                ALTER TABLE offer DROP CONSTRAINT IF EXISTS ck_offer_positive_price;
+                ALTER TABLE activity DROP CONSTRAINT IF EXISTS ex_activity_hall_time;
+                ALTER TABLE activity DROP CONSTRAINT IF EXISTS ck_activity_time_range;
+            ]]></sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

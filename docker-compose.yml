@@ -1,0 +1,135 @@
+name: seatlock
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: seatlock-db
+    restart: unless-stopped
+    env_file:
+      - ./backend/database_local.env
+    ports:
+      - "127.0.0.1:55434:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d seatlock"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:9.2.3
+    container_name: seatlock-elastic
+    restart: unless-stopped
+    environment:
+      discovery.type: single-node
+      xpack.security.enabled: "false"
+      ES_JAVA_OPTS: -Xms512m -Xmx512m
+    ports:
+      - "127.0.0.1:9200:9200"
+    volumes:
+      - elasticdata:/usr/share/elasticsearch/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9200/_cluster/health"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    container_name: seatlock-redis
+    restart: unless-stopped
+    command: redis-server --notify-keyspace-events Ex
+    ports:
+      - "127.0.0.1:6379:6379"
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  backend:
+    build:
+      context: ./backend
+    container_name: seatlock-api
+    restart: unless-stopped
+    env_file:
+      - ./backend/database_local.env
+      - ./backend/security.env
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/seatlock
+      SPRING_ELASTICSEARCH_URIS: http://elasticsearch:9200
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+      FRONTEND_URL: http://localhost:3000
+      APP_DEMO_DATA_ENABLED: "true"
+      APP_BOOTSTRAP_ADMIN_EMAIL: admin@seatlock.local
+      APP_BOOTSTRAP_ADMIN_PASSWORD: SeatLockDemo123!
+    ports:
+      - "127.0.0.1:8082:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+      elasticsearch:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 15s
+
+  websocket:
+    build:
+      context: ./go-sockets
+    container_name: seatlock-ws
+    restart: unless-stopped
+    env_file:
+      - ./go-sockets/.env
+    environment:
+      REDIS_ADDR: redis:6379
+      SPRING_GRPC_ADDR: backend:9090
+      WS_ALLOWED_ORIGINS: http://localhost:3000
+    ports:
+      - "127.0.0.1:8081:8081"
+    depends_on:
+      backend:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        NEXT_PUBLIC_API_MODE: real
+        NEXT_PUBLIC_PROFILE_API_MODE: real
+        NEXT_PUBLIC_PURCHASE_API_MODE: real
+        NEXT_PUBLIC_API_URL: http://localhost:8082
+        NEXT_PUBLIC_GRAPHQL_URL: http://localhost:8082/graphql
+        NEXT_PUBLIC_WS_URL: ws://localhost:8081
+    container_name: seatlock-frontend
+    restart: unless-stopped
+    environment:
+      NEXT_PUBLIC_API_MODE: real
+      NEXT_PUBLIC_PROFILE_API_MODE: real
+      NEXT_PUBLIC_PURCHASE_API_MODE: real
+      NEXT_PUBLIC_API_URL: http://localhost:8082
+      NEXT_PUBLIC_GRAPHQL_URL: http://localhost:8082/graphql
+      NEXT_PUBLIC_WS_URL: ws://localhost:8081
+    ports:
+      - "127.0.0.1:3000:3000"
+    depends_on:
+      backend:
+        condition: service_healthy
+      websocket:
+        condition: service_healthy
+
+volumes:
+  pgdata:
+  elasticdata:
+  redisdata:

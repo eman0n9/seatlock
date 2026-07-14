@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="v4-add-activity-owner" author="seatlock">
+        <addColumn tableName="activity">
+            <column name="owner_id" type="UUID">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+
+        <addForeignKeyConstraint baseTableName="activity"
+                                 baseColumnNames="owner_id"
+                                 referencedTableName="app_user"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_activity_owner_id"
+                                 onDelete="RESTRICT"/>
+
+        <createIndex tableName="activity" indexName="idx_activity_owner_id">
+            <column name="owner_id"/>
+        </createIndex>
+
+        <rollback>
+            <dropIndex tableName="activity" indexName="idx_activity_owner_id"/>
+            <dropForeignKeyConstraint baseTableName="activity" constraintName="fk_activity_owner_id"/>
+            <dropColumn tableName="activity" columnName="owner_id"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

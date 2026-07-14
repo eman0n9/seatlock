@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="05-create-activity" author="admin">
+        <createTable tableName="activity">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_activity"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="start_time" type="TIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="end_time" type="TIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(2000)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="activity_category_id" type="UUID">
+                <constraints nullable="false"
+                             foreignKeyName="fk_activity_category_id"
+                             references="activity_category(id)"/>
+            </column>
+            <column name="hall_id" type="UUID">
+                <constraints nullable="false"
+                             foreignKeyName="fk_activity_hall_id"
+                             references="hall(id)"/>
+            </column>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="activity"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

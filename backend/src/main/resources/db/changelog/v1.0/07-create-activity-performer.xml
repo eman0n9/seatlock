@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="07-create-activity-performer" author="admin">
+        <createTable tableName="activity_performer">
+            <column name="activity_id" type="UUID">
+                <constraints nullable="false"
+                             foreignKeyName="fk_ap_activity_id"
+                             references="activity(id)"/>
+            </column>
+            <column name="performer_id" type="UUID">
+                <constraints nullable="false"
+                             foreignKeyName="fk_ap_performer_id"
+                             references="performer(id)"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey tableName="activity_performer"
+                       columnNames="activity_id, performer_id"
+                       constraintName="pk_activity_performer"/>
+
+        <rollback>
+            <dropTable tableName="activity_performer"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

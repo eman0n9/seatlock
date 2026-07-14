@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="v4-protect-sold-seats" author="seatlock">
+        <addColumn tableName="ticket">
+            <column name="activity_id" type="UUID"/>
+        </addColumn>
+
+        <sql>
+            UPDATE ticket
+            SET activity_id = offer.activity_id
+            FROM offer
+            WHERE ticket.offer_id = offer.id
+        </sql>
+
+        <addNotNullConstraint tableName="ticket"
+                              columnName="activity_id"
+                              columnDataType="UUID"/>
+
+        <addForeignKeyConstraint baseTableName="ticket"
+                                 baseColumnNames="activity_id"
+                                 referencedTableName="activity"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_ticket_activity_id"
+                                 onDelete="RESTRICT"/>
+
+        <addUniqueConstraint tableName="ticket"
+                             columnNames="activity_id, seat_id"
+                             constraintName="uq_ticket_activity_seat"/>
+
+        <rollback>
+            <dropUniqueConstraint tableName="ticket" constraintName="uq_ticket_activity_seat"/>
+            <dropForeignKeyConstraint baseTableName="ticket" constraintName="fk_ticket_activity_id"/>
+            <dropColumn tableName="ticket" columnName="activity_id"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

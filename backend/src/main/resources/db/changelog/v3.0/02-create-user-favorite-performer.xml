@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="02-create-user-favorite-performer" author="admin">
+        <createTable tableName="user_favorite_performer">
+            <column name="user_id" type="UUID">
+                <constraints nullable="false"
+                             foreignKeyName="fk_ufp_user_id"
+                             references="app_user(id)"/>
+            </column>
+            <column name="performer_id" type="UUID">
+                <constraints nullable="false"
+                             foreignKeyName="fk_ufp_performer_id"
+                             references="performer(id)"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey tableName="user_favorite_performer"
+                       columnNames="user_id, performer_id"
+                       constraintName="pk_user_favorite_performer"/>
+
+        <rollback>
+            <dropTable tableName="user_favorite_performer"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

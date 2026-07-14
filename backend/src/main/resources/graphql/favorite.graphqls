@@ -1,0 +1,9 @@
+extend type Query {
+    getFavoriteActivities: [Activity!]!
+    getFavoritePerformers: [Performer!]!
+}
+
+extend type Mutation {
+    toggleFavoriteActivity(activityId: ID!): Boolean!
+    toggleFavoritePerformer(performerId: ID!): Boolean!
+}

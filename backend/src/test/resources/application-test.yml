@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:55434/seatlock
+    username: user
+    password: password
+  elasticsearch:
+    uris: http://localhost:9200
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+security:
+  jwt:
+    secret: c2VhdGxvY2stY2ktdGVzdC1rZXktMzItYnl0ZXMtbWluaW11bQ==

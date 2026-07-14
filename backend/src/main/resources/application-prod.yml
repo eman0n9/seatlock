@@ -1,0 +1,24 @@
+spring:
+  graphql:
+    graphiql:
+      enabled: false
+    schema:
+      introspection:
+        enabled: false
+
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false
+
+logging:
+  level:
+    root: INFO
+    org.springframework.graphql: INFO
+    org.jooq.tools.LoggerListener: INFO
+    org.springframework.data.elasticsearch: INFO
+
+app:
+  demo-data:
+    enabled: false

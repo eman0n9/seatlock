@@ -1,0 +1,9 @@
+.git
+.idea
+.env
+.env.*
+!.env.example
+seatlock
+server
+server.exe
+*.log
